@@ -8,7 +8,7 @@ public class main {
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"};
         String[] sortedLetters = new String[26];
-        List<String> sortedLetterList = new ArrayList<>();
+        /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
                 "UM WXQ QA TXDMXQMUF, U DIVIG WXDMIN UM MA IDN. U QHIDM IUKJM NXRQ UD HXGUQ, TGXDFI. " +
                 "PR CIQM TGUIDNQ, JIDGR XDN QMIVI, WIDM WUMJ PI. WI JXN X CIXZMUTZB JAMIB GAAP UD MJI " +
@@ -103,7 +103,7 @@ public class main {
         // Das Programm gibt den Schlüssel zu dem verschlüsselten Text aus
         System.out.println("");
         System.out.println("Der Key für das Chiffrat ist:");
-        GetKey(englishLetterFrequency, sortedLetters, buchstabenZaehlerListe, 0);
+        Tool.GetKey(englishLetterFrequency, sortedLetters, buchstabenZaehlerListe, 0);
 
         StringBuilder buildChiffrat = new StringBuilder();
         System.out.println();
@@ -130,26 +130,16 @@ public class main {
         Tool.changLetter(buchstabenZaehlerListe,sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         System.out.println(newChiffrat);
-        //Debugger (Ich weiss, dass das Programm bis hier hin gelaufen ist)
+        //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
         System.out.println("hallo");
-
+/*
         String[] mostFrequentWordsEnglish = {""};
         Node root = new Node("i", "e");
         Node aktuell = root.addNode("m", "t");
         aktuell = aktuell.addNode("x", "a");
         Tool.convertLetterCounterListToStringList(buchstabenZaehlerListe,sortedLetterList);
         Tool.findKey(aktuell, sortedLetterList, buchstabenZaehlerListe);
-    }
-
-    // Die Funktion soll später dazu dienen den Schlüssel auszugeben
-    public static void GetKey(String[] arr, String[] arr1, List<LetterCounter> lettercounters, int i) {
-        for (LetterCounter a : lettercounters) {
-            if (i < 26) {
-                arr1[i] = a.getLetter();
-                System.out.println(a.getLetter() + " = " + arr[i]);
-                i++;
-            }
-        }
+        */
     }
 }
 

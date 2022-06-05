@@ -1,5 +1,5 @@
 
-import java.util.*;
+/*import java.util.*;
 
 public class Node {
     private String verschluesselt;
@@ -18,6 +18,6 @@ public class Node {
         return kind;
     }
 }
-
+*/
 
 

@@ -1,4 +1,4 @@
-import java.util.*;
+/*import java.util.*;
 
 public class Knoten implements Cloneable {
 
@@ -30,7 +30,7 @@ public class Knoten implements Cloneable {
         }
         return a;
     }
-*/
+
     public List<Knoten> getChildren(){
         return this.children;
     }
@@ -70,7 +70,7 @@ public class Knoten implements Cloneable {
         }
     }
 }
-
+*/
 
 
 
