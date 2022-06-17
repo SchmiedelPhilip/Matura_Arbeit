@@ -31,13 +31,21 @@ public class Tool {
         }
     }
     // Die Funktion tauscht die Buchstaben in einem Text
-    public static void changLetter(List<LetterCounter> list, String[] sortedLetters, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
+    public static void changeLetter(int howMany,List<LetterCounter> list, String[] sortedLetters, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
         for (String readLetter : chiffrat.split("")) {
+            if(readLetter.equals(" ")) {
+                buildChiffrat.append(readLetter);
+            }
             for (LetterCounter letter : list) {
                 if (letter.getLetter().equals(readLetter)) {
                     int getIndex = Arrays.asList(sortedLetters).indexOf(readLetter);
-                    String newLetter = readLetter.replace(readLetter, englishLetterFrequency[Math.abs(getIndex)]);
-                    buildChiffrat.append(newLetter);
+                    if(getIndex <= howMany) {
+                        String newLetter = readLetter.replace(readLetter, englishLetterFrequency[Math.abs(getIndex)]);
+                        buildChiffrat.append(newLetter);
+                    }
+                    else{
+                        buildChiffrat.append(readLetter);
+                    }
                 }
             }
         }
@@ -70,28 +78,38 @@ public class Tool {
             list.add(str);
         }
     }
-    public static String findWayWithMostRecognizedWords(int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters){
+    public static String findWayWithMostRecognizedWords(String[] verschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,StringBuilder buildChiffrat){
         for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i++){
             if(anzahlBuchstaben == 3){
                 if(i%2==0){
+                    String temp = verschlüsselteBuchstaben[3];
+                    verschlüsselteBuchstaben[3] = verschlüsselteBuchstaben[2];
+                    verschlüsselteBuchstaben[2] = temp;
                 }
                 if(i%2==1){
+                    String temp = verschlüsselteBuchstaben[2];
+                    verschlüsselteBuchstaben[2] = verschlüsselteBuchstaben[1];
+                    verschlüsselteBuchstaben[1] = temp;
                 }
             }
             if(anzahlBuchstaben == 4){
                 if(i%2==0){
+                    String temp = verschlüsselteBuchstaben[3];
+                    verschlüsselteBuchstaben[3] = verschlüsselteBuchstaben[4];
+                    verschlüsselteBuchstaben[4] = temp;
                 }
                 if(i%2==1){
+                    String temp = verschlüsselteBuchstaben[2];
+                    verschlüsselteBuchstaben[2] = verschlüsselteBuchstaben[3];
+                    verschlüsselteBuchstaben[3] = temp;
                 }
                 if(i%6==0){
+                    String temp = verschlüsselteBuchstaben[1];
+                    verschlüsselteBuchstaben[1] = verschlüsselteBuchstaben[2];
+                    verschlüsselteBuchstaben[2] = temp;
                 }
             }
-            for(String letter : chiffrat.split(" ")){
-                for(String readLetter : sortedLetters){
-                    if(letter.equals(readLetter)){
-                    }
-                }
-            }
+            changeLetter(anzahlBuchstaben,letterCounterList, sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
         }
         return chiffrat;
     }

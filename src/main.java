@@ -6,8 +6,8 @@ public class main {
     public static void main(String[] args) {
 
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"};
-        String[] sortedLetters = new String[26];
+        String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"," "};
+        String[] sortedLetters = new String[27];
         /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
                 "UM WXQ QA TXDMXQMUF, U DIVIG WXDMIN UM MA IDN. U QHIDM IUKJM NXRQ UD HXGUQ, TGXDFI. " +
@@ -127,7 +127,7 @@ public class main {
         }
         */
         // Das Programm iteriert durch den Text, mit Hilfe einer Methode und kann so Buchstabe für Buchstabe durch den Key ersetzt werden
-        Tool.changLetter(buchstabenZaehlerListe,sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
+        Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         System.out.println(newChiffrat);
         //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
