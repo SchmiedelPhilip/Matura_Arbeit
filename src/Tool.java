@@ -2,7 +2,7 @@ import java.util.*;
 import java.lang.*;
 
 public class Tool {
-
+    // Die Funktion rechnet Fakultät einer Zahl aus
     public static int getFactorial(int fakultaet){
         int result = 1;
         for(int i = 1; i <= fakultaet; i++){
@@ -30,6 +30,16 @@ public class Tool {
             }
         }
     }
+    // Die Funktion zählt die Wörter in einem Text
+    public static void countWords(List<WordCounter> wordCounterList, String chiffrat){
+        for(String readWord : chiffrat.split(" ")) {
+            for(WordCounter word : wordCounterList) {
+                if(readWord.equals(word.getWord())) {
+                    word.increaseCount();
+                }
+            }
+        }
+    }
     // Die Funktion tauscht die Buchstaben in einem Text
     public static void changeLetter(int howMany,List<LetterCounter> list, String[] sortedLetters, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
         for (String readLetter : chiffrat.split("")) {
@@ -50,7 +60,7 @@ public class Tool {
             }
         }
     }
-
+    // Die Funktion nimmt die ersten 4 Buchstaben einer Liste
     public static List<String> getFirstFourLetters(List<String> sortedLetterList) {
         List<String> firstFourLettersList = new ArrayList<>();
         // Die ersten 3 Buchstaben der SortedLetterList sollen entfernt werden
@@ -68,50 +78,61 @@ public class Tool {
         }
         return firstFourLettersList;
     }
+    // Die Funktion macht aus einer List<LetterCounter> eine List<String>
     public static void convertLetterCounterListToStringList(List<LetterCounter> letterCounterlist, List<String> stringList) {
         for (LetterCounter a : letterCounterlist) {
             stringList.add(a.getLetter());
         }
     }
+    // Die Funktion macht aus einem String eine Liste
     public static void convertStringToList(List<String> list, String mostFrequentWordsEnglish){
         for(String str : mostFrequentWordsEnglish.split(" ")){
             list.add(str);
         }
     }
-    public static String findWayWithMostRecognizedWords(String[] verschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,StringBuilder buildChiffrat){
-        for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i++){
+    // Die Funktion tauscht die Werte von 2 Arrayplätzen
+    public static void swapTwoPlaces(int placeOne,int placeTwo,String[] arr){
+        String temp = arr[placeOne];
+        arr[placeOne] = arr[placeTwo];
+        arr[placeTwo] = temp;
+    }
+
+    public static void findWayWithMostRecognizedWords(String[] entschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,List<WordCounter> wordCounterList, StringBuilder buildChiffrat, String[] verschlüsselteBuchstaben){
+        for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i+=1){
+            for(String a : entschlüsselteBuchstaben) {
+                System.out.print(a+" ");
+            }
+            System.out.println();
             if(anzahlBuchstaben == 3){
                 if(i%2==0){
-                    String temp = verschlüsselteBuchstaben[3];
-                    verschlüsselteBuchstaben[3] = verschlüsselteBuchstaben[2];
-                    verschlüsselteBuchstaben[2] = temp;
+                    Tool.swapTwoPlaces(1,2,entschlüsselteBuchstaben);
                 }
                 if(i%2==1){
-                    String temp = verschlüsselteBuchstaben[2];
-                    verschlüsselteBuchstaben[2] = verschlüsselteBuchstaben[1];
-                    verschlüsselteBuchstaben[1] = temp;
+                    Tool.swapTwoPlaces(0,1,entschlüsselteBuchstaben);
                 }
             }
             if(anzahlBuchstaben == 4){
                 if(i%2==0){
-                    String temp = verschlüsselteBuchstaben[3];
-                    verschlüsselteBuchstaben[3] = verschlüsselteBuchstaben[4];
-                    verschlüsselteBuchstaben[4] = temp;
+                    Tool.swapTwoPlaces(2,3,entschlüsselteBuchstaben);
                 }
-                if(i%2==1){
-                    String temp = verschlüsselteBuchstaben[2];
-                    verschlüsselteBuchstaben[2] = verschlüsselteBuchstaben[3];
-                    verschlüsselteBuchstaben[3] = temp;
+                if(i%2==1 && i%6 != 5){
+                    Tool.swapTwoPlaces(1,2,entschlüsselteBuchstaben);
                 }
-                if(i%6==0){
-                    String temp = verschlüsselteBuchstaben[1];
-                    verschlüsselteBuchstaben[1] = verschlüsselteBuchstaben[2];
-                    verschlüsselteBuchstaben[2] = temp;
+                if(i%6==5){
+                    Tool.swapTwoPlaces(0,1,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(2,3,entschlüsselteBuchstaben);
                 }
             }
-            changeLetter(anzahlBuchstaben,letterCounterList, sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
+            changeLetter(anzahlBuchstaben,letterCounterList, verschlüsselteBuchstaben,entschlüsselteBuchstaben,chiffrat,buildChiffrat);
+            String newChiffrat = buildChiffrat.toString();
+            Tool.countWords(wordCounterList,newChiffrat);
+            for(WordCounter word : wordCounterList){
+                System.out.println(word.getWord()+" = "+word.getCount());
+            }
+            //System.out.print(newChiffrat);
+            System.out.println();
+            System.out.println();
         }
-        return chiffrat;
     }
 /*
     public static void findKey(Node actuell, List<String> sortedLettersList,List<LetterCounter> letterCounterList) {

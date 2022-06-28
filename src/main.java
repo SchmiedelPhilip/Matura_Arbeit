@@ -7,6 +7,8 @@ public class main {
 
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"," "};
+        String[] entschlüsselteBuchstaben = {"O","N","I","H"};
+        String[] verschlüsselteBuchstaben = {"Q","A","J","U"};
         String[] sortedLetters = new String[27];
         /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
@@ -72,7 +74,16 @@ public class main {
             System.out.println(buchstabe.getLetter() + " = " + buchstabe.getCount());
             buchstabenZaehlerListe.add(buchstabe);
         }
+        List<String> mostFrequentWordsEnglishList = new ArrayList<>();
+        List<WordCounter> wörterZählerListe = new ArrayList<>();
+        String mostFreuquentWordsEnglish = "A ABOUT ALL ALSO AND AS AT BE BECAUSE BUT BY CAN COME COULD DAY DO EVEN FIND FIRST FOR FROM GET GIVE GO HAVE HE HER HERE HIM HIS HOW IF IN INTO IT ITS JUST KNOW LIKE LOOK MAKE MAN MANY ME MORE MY NEW NO NOT NOW OF ON ONE ONLY OR OTHER OUR OUT PEOPLE SAY SEE SHE SO SOME TAKE TELL THAN THAT THE THEIR THEM THEN THERE THESE THEY THING THINK THIS THOSE TIME TO TWO UP USE VERY WANT WAY WE WELL WHAT WHEN WHICH WHO WILL WITH WOULD YEAR YOU YOUR";
+        // Jedes einzelne Wort wird in die Liste mostFrequentWordsEnglishList eingefügt
+        Tool.convertStringToList(mostFrequentWordsEnglishList,mostFreuquentWordsEnglish);
 
+        for(String word : mostFreuquentWordsEnglish.split(" ")){
+            WordCounter wort = new WordCounter(word);
+            wörterZählerListe.add(wort);
+        }
         /*for (String readLetter : chiffrat.split("")) {
             Optional<LetterCounter> result = buchstabenZaehlerListe.stream()
                     .filter(counter -> counter.getLetter().equals(readLetter))
@@ -130,6 +141,7 @@ public class main {
         Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         System.out.println(newChiffrat);
+        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstaben,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstaben,buchstabenZaehlerListe,wörterZählerListe,buildChiffrat,verschlüsselteBuchstaben);
         //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
         System.out.println("hallo");
 /*
@@ -176,4 +188,24 @@ class LetterCounter {
         }
     };
 }
+class WordCounter{
 
+    private final String word;
+    private int count;
+
+    WordCounter(String word) {
+        this.word = word;
+        this.count = 0;
+    }
+    public void increaseCount(){
+        this.count += 1;
+    }
+
+    public String getWord(){
+        return word;
+    }
+
+    public int getCount(){
+        return count;
+    }
+}
