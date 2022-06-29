@@ -208,4 +208,8 @@ class WordCounter{
     public int getCount(){
         return count;
     }
+
+    public void makeCountZero(){
+        this.count = 0;
+    }
 }

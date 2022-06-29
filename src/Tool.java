@@ -96,6 +96,14 @@ public class Tool {
         arr[placeOne] = arr[placeTwo];
         arr[placeTwo] = temp;
     }
+    // Die Funktion gebt den summierten count aller gezählten Wörter zurück
+    public static int getAllCounts(List<WordCounter> wordCounterList){
+        int result = 0;
+        for(WordCounter word : wordCounterList){
+            result = result + word.getCount();
+        }
+        return result;
+    }
 
     public static void findWayWithMostRecognizedWords(String[] entschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,List<WordCounter> wordCounterList, StringBuilder buildChiffrat, String[] verschlüsselteBuchstaben){
         for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i+=1){
@@ -126,8 +134,13 @@ public class Tool {
             changeLetter(anzahlBuchstaben,letterCounterList, verschlüsselteBuchstaben,entschlüsselteBuchstaben,chiffrat,buildChiffrat);
             String newChiffrat = buildChiffrat.toString();
             Tool.countWords(wordCounterList,newChiffrat);
-            for(WordCounter word : wordCounterList){
+            /*for(WordCounter word : wordCounterList){
                 System.out.println(word.getWord()+" = "+word.getCount());
+            }
+             */
+            System.out.println("Gezählte Wörter im Text: "+Tool.getAllCounts(wordCounterList));
+            for(WordCounter word : wordCounterList){
+                word.makeCountZero();
             }
             //System.out.print(newChiffrat);
             System.out.println();
