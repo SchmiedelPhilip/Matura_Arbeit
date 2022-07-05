@@ -41,15 +41,15 @@ public class Tool {
         }
     }
     // Die Funktion tauscht die Buchstaben in einem Text
-    public static void changeLetter(int howMany,List<LetterCounter> list, String[] sortedLetters, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
+    public static void changeLetter(int howMany,List<LetterCounter> list, String[] sortedLetterCounter, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
         for (String readLetter : chiffrat.split("")) {
             if(readLetter.equals(" ")) {
                 buildChiffrat.append(readLetter);
             }
             for (LetterCounter letter : list) {
                 if (letter.getLetter().equals(readLetter)) {
-                    int getIndex = Arrays.asList(sortedLetters).indexOf(readLetter);
-                    if(getIndex <= howMany) {
+                    int getIndex = Arrays.asList(sortedLetterCounter).indexOf(readLetter);
+                    if(getIndex < howMany) {
                         String newLetter = readLetter.replace(readLetter, englishLetterFrequency[Math.abs(getIndex)]);
                         buildChiffrat.append(newLetter);
                     }
@@ -107,8 +107,31 @@ public class Tool {
 
     public static void findWayWithMostRecognizedWords(String[] entschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,List<WordCounter> wordCounterList, StringBuilder buildChiffrat, String[] verschlüsselteBuchstaben){
         for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i+=1){
-            for(String a : entschlüsselteBuchstaben) {
+            for(String a : entschlüsselteBuchstaben){
                 System.out.print(a+" ");
+            }
+            System.out.println();
+            for(String b : verschlüsselteBuchstaben){
+                int getIndex = Arrays.asList(verschlüsselteBuchstaben).indexOf(b);
+                if(getIndex < anzahlBuchstaben) {
+                    System.out.print(b + " ");
+                }
+            }
+            System.out.println();
+            // Die Buchstaben werden ersetzt
+            changeLetter(anzahlBuchstaben,letterCounterList, verschlüsselteBuchstaben,entschlüsselteBuchstaben,chiffrat,buildChiffrat);
+            String newChiffrat = buildChiffrat.toString();
+            // Alle Wörter werden gezählt
+            Tool.countWords(wordCounterList,newChiffrat);
+
+            for(WordCounter word : wordCounterList){
+                System.out.println(word.getWord()+" = "+word.getCount());
+            }
+
+            System.out.println("Gezählte Wörter im Text: "+Tool.getAllCounts(wordCounterList));
+            //Der Count wird wieder auf 0 gebracht, weil er sich sonst summieren würde
+            for(WordCounter word : wordCounterList){
+                word.makeCountZero();
             }
             System.out.println();
             if(anzahlBuchstaben == 3){
@@ -130,17 +153,6 @@ public class Tool {
                     Tool.swapTwoPlaces(0,1,entschlüsselteBuchstaben);
                     Tool.swapTwoPlaces(2,3,entschlüsselteBuchstaben);
                 }
-            }
-            changeLetter(anzahlBuchstaben,letterCounterList, verschlüsselteBuchstaben,entschlüsselteBuchstaben,chiffrat,buildChiffrat);
-            String newChiffrat = buildChiffrat.toString();
-            Tool.countWords(wordCounterList,newChiffrat);
-            /*for(WordCounter word : wordCounterList){
-                System.out.println(word.getWord()+" = "+word.getCount());
-            }
-             */
-            System.out.println("Gezählte Wörter im Text: "+Tool.getAllCounts(wordCounterList));
-            for(WordCounter word : wordCounterList){
-                word.makeCountZero();
             }
             //System.out.print(newChiffrat);
             System.out.println();

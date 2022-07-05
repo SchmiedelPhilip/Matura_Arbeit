@@ -8,7 +8,7 @@ public class main {
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"," "};
         String[] entschlüsselteBuchstaben = {"O","N","I","H"};
-        String[] verschlüsselteBuchstaben = {"Q","A","J","U"};
+        String[] verschlüsselteBuchstaben = {"Q","A","J","U","D","G","B","N","F","P","Z","K","W","R","L","T","H","V","C","O","E","S","Y"};
         String[] sortedLetters = new String[27];
         /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
@@ -141,6 +141,7 @@ public class main {
         Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetters,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         System.out.println(newChiffrat);
+        System.out.println(chiffrat);
         Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstaben,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstaben,buchstabenZaehlerListe,wörterZählerListe,buildChiffrat,verschlüsselteBuchstaben);
         //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
         System.out.println("hallo");
