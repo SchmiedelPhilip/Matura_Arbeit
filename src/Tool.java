@@ -11,7 +11,8 @@ public class Tool {
         return result;
     }
     // Die Funktion soll später dazu dienen den Schlüssel auszugeben
-    public static void GetKey(String[] arr, String[] arr1, List<LetterCounter> lettercounters, int i) {
+    public static void getKey(String[] arr, String[] arr1, List<LetterCounter> lettercounters) {
+        int i = 0;
         for (LetterCounter a : lettercounters) {
             if (i < 26) {
                 arr1[i] = a.getLetter();
@@ -105,58 +106,82 @@ public class Tool {
         return result;
     }
 
-    public static void findWayWithMostRecognizedWords(String[] entschlüsselteBuchstaben,int anzahlBuchstaben, String chiffrat, List<String> mostFrequentWordsEnglish, String[] englishLetterFrequency,String[] sortedLetters,List<LetterCounter> letterCounterList,List<WordCounter> wordCounterList, StringBuilder buildChiffrat, String[] verschlüsselteBuchstaben){
+    public static void findWayWithMostRecognizedWords(int anzahlBuchstaben,int howManyChangedLetters, String chiffrat, String[] englishLetterFrequency,String[] sortedLetterCounter,List<LetterCounter> letterCounterList,List<WordCounter> wordCounterList, StringBuilder buildChiffrat){
+        String[] verschlüsselteBuchstaben = new String[anzahlBuchstaben];
+        String[] entschlüsselteBuchstaben = new String[anzahlBuchstaben];
+        List<ArrayKeeper> arrayWithHiqhestCount = new ArrayList<>();
+        for(int i = howManyChangedLetters-anzahlBuchstaben; i < howManyChangedLetters ; i++){
+          verschlüsselteBuchstaben[i-(howManyChangedLetters-anzahlBuchstaben)] = sortedLetterCounter[i];
+          entschlüsselteBuchstaben[i-(howManyChangedLetters-anzahlBuchstaben)] = englishLetterFrequency[i];
+      }
+
         for(int i = 0; i < Tool.getFactorial(anzahlBuchstaben);i+=1){
+           /*
             for(String a : entschlüsselteBuchstaben){
                 System.out.print(a+" ");
             }
             System.out.println();
             for(String b : verschlüsselteBuchstaben){
-                int getIndex = Arrays.asList(verschlüsselteBuchstaben).indexOf(b);
-                if(getIndex < anzahlBuchstaben) {
-                    System.out.print(b + " ");
-                }
+                System.out.print(b + " ");
+            }
+         */
+            for(int j = 0; j<anzahlBuchstaben;j++){
+                sortedLetterCounter[j+(howManyChangedLetters-anzahlBuchstaben)] = verschlüsselteBuchstaben[j];
             }
             System.out.println();
             // Die Buchstaben werden ersetzt
-            changeLetter(anzahlBuchstaben,letterCounterList, verschlüsselteBuchstaben,entschlüsselteBuchstaben,chiffrat,buildChiffrat);
+            Tool.changeLetter(howManyChangedLetters,letterCounterList, sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
             String newChiffrat = buildChiffrat.toString();
+            buildChiffrat.setLength(0);
             // Alle Wörter werden gezählt
             Tool.countWords(wordCounterList,newChiffrat);
-
+            //System.out.println(newChiffrat);
+            /*
             for(WordCounter word : wordCounterList){
                 System.out.println(word.getWord()+" = "+word.getCount());
             }
+             */
 
-            System.out.println("Gezählte Wörter im Text: "+Tool.getAllCounts(wordCounterList));
-            //Der Count wird wieder auf 0 gebracht, weil er sich sonst summieren würde
+            // System.out.println("Gezählte Wörter im Text: "+ Tool.getAllCounts(wordCounterList));
+            // Der Count wird wieder auf 0 gebracht, weil er sich sonst summieren würde
+            ArrayKeeper arrayKeeper = new ArrayKeeper(verschlüsselteBuchstaben,Tool.getAllCounts(wordCounterList));
+            if(arrayWithHiqhestCount.isEmpty()){
+                arrayWithHiqhestCount.add(arrayKeeper);
+            }
+            if(arrayWithHiqhestCount.get(0).getCount() < arrayKeeper.getCount()){
+                arrayWithHiqhestCount.set(0,arrayKeeper);
+            }
             for(WordCounter word : wordCounterList){
                 word.makeCountZero();
             }
             System.out.println();
             if(anzahlBuchstaben == 3){
                 if(i%2==0){
-                    Tool.swapTwoPlaces(1,2,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(1,2,verschlüsselteBuchstaben);
                 }
                 if(i%2==1){
-                    Tool.swapTwoPlaces(0,1,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(0,1,verschlüsselteBuchstaben);
                 }
             }
             if(anzahlBuchstaben == 4){
                 if(i%2==0){
-                    Tool.swapTwoPlaces(2,3,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(2,3,verschlüsselteBuchstaben);
                 }
                 if(i%2==1 && i%6 != 5){
-                    Tool.swapTwoPlaces(1,2,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(1,2,verschlüsselteBuchstaben);
                 }
                 if(i%6==5){
-                    Tool.swapTwoPlaces(0,1,entschlüsselteBuchstaben);
-                    Tool.swapTwoPlaces(2,3,entschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(0,1,verschlüsselteBuchstaben);
+                    Tool.swapTwoPlaces(2,3,verschlüsselteBuchstaben);
                 }
             }
             //System.out.print(newChiffrat);
             System.out.println();
             System.out.println();
+        }
+        String[] arr = arrayWithHiqhestCount.get(0).getArr();
+        for(int k = 0; k < arr.length; k++){
+            sortedLetterCounter[k+(howManyChangedLetters-anzahlBuchstaben)] = arr[k];
         }
     }
 /*

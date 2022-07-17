@@ -7,18 +7,6 @@ public class main {
 
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"," "};
-        String[] entschlüsselteBuchstaben = {"O","N","I","H"};
-        String[] verschlüsselteBuchstaben = {"Q","A","J","U","D","G","B","N","F","P","Z","K","W","R","L","T","H","V","C","O","E","S","Y"};
-        String[] entschlüsselteBuchstabenTeilZwei = {"S","R","L","D"};
-        String[] verschlüsselteBuchstabenTeilZwei = {"D","G","B","N","F","P","Z","K","W","R","L","T","H","V","C","O","E","S","Y","Q","A","J","U"};
-        String[] entschlüsselteBuchstabenTeilDrei = {"U","C","M","W"};
-        String[] verschlüsselteBuchstabenTeilDrei = {"F","P","Z","K","W","R","L","T","H","V","C","O","E","S","Y","Q","A","J","U","D","G","B","N"};
-        String[] entschlüsselteBuchstabenTeilVier = {"Y","F","G"};
-        String[] verschlüsselteBuchstabenTeilVier = {"K","W","R","L","T","H","V","C","O","E","S","Y","Q","A","J","U","D","G","B","N","F","P","Z"};
-        String[] entschlüsselteBuchstabenTeilFuenf = {"P","B","V","K"};
-        String[] verschlüsselteBuchstabenTeilFuenf = {"T","H","V","C","O","E","S","Y",};
-        String[] entschlüsselteBuchstabenTeilSechs = {"J","X","Q","Z"};
-        String[] verschlüsselteBuchstabenTeilSechs = {"O","E","S","Y","Q","A","J","U","D","G","B","N","F","P","Z","K","W","R","L","T","H","V","C"};
         String[] sortedLetterCounter = new String[27];
         /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
@@ -84,6 +72,7 @@ public class main {
             System.out.println(buchstabe.getLetter() + " = " + buchstabe.getCount());
             buchstabenZaehlerListe.add(buchstabe);
         }
+
         List<String> mostFrequentWordsEnglishList = new ArrayList<>();
         List<WordCounter> woerterZaehlerListe = new ArrayList<>();
         String mostFreuquentWordsEnglish = "A ABOUT ALL ALSO AND AS AT BE BECAUSE BUT BY CAN COME COULD DAY DO EVEN FIND FIRST FOR FROM GET GIVE GO HAVE HE HER HERE HIM HIS HOW IF IN INTO IT ITS JUST KNOW LIKE LOOK MAKE MAN MANY ME MORE MY NEW NO NOT NOW OF ON ONE ONLY OR OTHER OUR OUT PEOPLE SAY SEE SHE SO SOME TAKE TELL THAN THAT THE THEIR THEM THEN THERE THESE THEY THING THINK THIS THOSE TIME TO TWO UP USE VERY WANT WAY WE WELL WHAT WHEN WHICH WHO WILL WITH WOULD YEAR YOU YOUR";
@@ -124,7 +113,7 @@ public class main {
         // Das Programm gibt den Schlüssel zu dem verschlüsselten Text aus
         System.out.println("");
         System.out.println("Der Key für das Chiffrat ist:");
-        Tool.GetKey(englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, 0);
+        Tool.getKey(englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe);
 
         StringBuilder buildChiffrat = new StringBuilder();
         System.out.println();
@@ -150,14 +139,15 @@ public class main {
         // Das Programm iteriert durch den Text, mit Hilfe einer Methode und kann so Buchstabe für Buchstabe durch den Key ersetzt werden
         Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
+        buildChiffrat.setLength(0);
         System.out.println(newChiffrat);
         System.out.println(chiffrat);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstaben,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstaben,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstabenTeilZwei,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstabenTeilZwei,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstabenTeilDrei,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstabenTeilDrei,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstabenTeilVier,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstabenTeilVier,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstabenTeilFuenf,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstabenTeilFuenf,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
-        Tool.findWayWithMostRecognizedWords(entschlüsselteBuchstabenTeilSechs,4,newChiffrat,mostFrequentWordsEnglishList,englishLetterFrequency,verschlüsselteBuchstabenTeilSechs,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat,verschlüsselteBuchstaben);
+        Tool.findWayWithMostRecognizedWords(4,7,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4,11,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4,15,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4,19,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4,23,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
+        Tool.getKey(englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe);
         //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
         System.out.println("hallo");
 /*
@@ -204,6 +194,7 @@ class LetterCounter {
         }
     };
 }
+
 class WordCounter{
 
     private final String word;
@@ -229,3 +220,22 @@ class WordCounter{
         this.count = 0;
     }
 }
+
+class ArrayKeeper{
+
+    private String[] arr;
+    private int count;
+
+    ArrayKeeper(String[] arr, int count) {
+        this.arr = arr;
+        this.count = count;
+    }
+
+    public String[] getArr(){
+        return arr;
+    }
+    public int getCount(){
+        return count;
+    }
+}
+
