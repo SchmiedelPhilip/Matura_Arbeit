@@ -116,8 +116,6 @@ public class main {
         Tool.getKey(englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe);
 
         StringBuilder buildChiffrat = new StringBuilder();
-        System.out.println();
-        System.out.println("Der entschlüsselte Text lautet:");
         /*for (String readLetter : chiffrat.split("")) {
             Optional<LetterCounter> result = buchstabenZaehlerListe.stream()
                     .filter(counter -> counter.getLetter().equals(readLetter))
@@ -140,16 +138,23 @@ public class main {
         Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         buildChiffrat.setLength(0);
+        System.out.println();
+        System.out.println("Der bis jetzt entschlüsselte Text lautet:");
         System.out.println(newChiffrat);
-        System.out.println(chiffrat);
         Tool.findWayWithMostRecognizedWords(4,7,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
         Tool.findWayWithMostRecognizedWords(4,11,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
         Tool.findWayWithMostRecognizedWords(4,15,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
         Tool.findWayWithMostRecognizedWords(4,19,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
         Tool.findWayWithMostRecognizedWords(4,23,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.getKey(englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe);
-        //Debugger (Ich weiss, dass das Programm bis hier hin durchgelaufen ist)
-        System.out.println("hallo");
+        Tool.getKeyModified(sortedLetterCounter,englishLetterFrequency);
+        Tool.changeLetter(26,buchstabenZaehlerListe,sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
+        String klarText = buildChiffrat.toString();
+        buildChiffrat.setLength(0);
+        System.out.println("Der nun entschlüsselte Text lautet: ");
+        System.out.println(klarText);
+        System.out.println();
+        System.out.println("Das eigentliche chiffrat lautete: ");
+        System.out.println(chiffrat);
 /*
         String[] mostFrequentWordsEnglish = {""};
         Node root = new Node("i", "e");
@@ -195,7 +200,7 @@ class LetterCounter {
     };
 }
 
-class WordCounter{
+class WordCounter {
 
     private final String word;
     private int count;
@@ -221,10 +226,10 @@ class WordCounter{
     }
 }
 
-class ArrayKeeper{
+class ArrayKeeper {
 
-    private String[] arr;
-    private int count;
+    private final String[] arr;
+    private final int count;
 
     ArrayKeeper(String[] arr, int count) {
         this.arr = arr;
@@ -234,8 +239,25 @@ class ArrayKeeper{
     public String[] getArr(){
         return arr;
     }
+
     public int getCount(){
         return count;
     }
+
+    public void changeArr(String[] sortedLetterCounter, int fromWhere, int toWhere){
+        for(int i = 0; i < (toWhere-fromWhere); i++){
+            sortedLetterCounter[i+fromWhere] = arr[i];
+        }
+    }
+
+    public static Comparator<ArrayKeeper> LetCountComparator1 = new Comparator<ArrayKeeper>() {
+        @Override
+        public int compare(ArrayKeeper l1, ArrayKeeper l2) {
+            int a = l1.getCount();
+            int b = l2.getCount();
+
+            return a - b;
+        }
+    };
 }
 
