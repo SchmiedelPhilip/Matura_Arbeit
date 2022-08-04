@@ -11,6 +11,16 @@ public class Tool {
         return result;
     }
 
+    // Die Funktion gibt die Anleitung für das Buchstaben tauschen aus
+    public static void anleitungBuchstabenTauschen(){
+        System.out.println("Anleitung Buchstaben tauschen:");
+        System.out.println("Suchen Sie im Klartext den Buchstaben den Sie tauschen möchten");
+        System.out.println("Schauen Sie im Chiffrat welcher Buchstaben es einmal gewesen ist");
+        System.out.println("Suchen Sie die diesen Buchstaben in der linken Spalte des Schlüssels und merken Sie sich die Stelle");
+        System.out.println("Suchen Sie im Schlüssel, in der rechten Spalte den Buchstaben, der eigentlich ersetzt werden soll und merken Sie deren Stelle ebenfalls");
+        System.out.println("Nun können Sie beide Stellen nacheinander eingeben");
+    }
+
     // Die Funktion soll später dazu dienen den Schlüssel auszugeben und macht nebenbei die sortierten Buchstaben der Reihe nach in eine Liste
     public static void getKey(String[] arr, String[] arr1, List<LetterCounter> lettercounters) {
         int i = 0;
@@ -29,6 +39,18 @@ public class Tool {
         for (String a : sortedLetterCounter) {
             if (i < 26) {
                 System.out.println(a + " = " + englishLetterFequency[i]);
+                i++;
+            }
+        }
+    }
+
+    // Die Funktion gibt den Schlüssel aus, sowie die Stelle an der sich der Buchstabe im Schlüssel befindet
+    public static void getKeyModified2(String[] sortedLetterCounter, String[] englishLetterFequency) {
+        int i = 0;
+        for (String a : sortedLetterCounter) {
+            if (i < 26) {
+                int getIndexOfA = Arrays.asList(sortedLetterCounter).indexOf(a) + 1;
+                System.out.println(getIndexOfA + " " + a + " = " + englishLetterFequency[i]);
                 i++;
             }
         }
@@ -66,7 +88,7 @@ public class Tool {
                 if (letter.getLetter().equals(readLetter)) {
                     int getIndex = Arrays.asList(sortedLetterCounter).indexOf(readLetter);
                     if (getIndex < howMany) {
-                        String newLetter = readLetter.replace(readLetter, englishLetterFrequency[Math.abs(getIndex)]);
+                        String newLetter = readLetter.replace(readLetter, englishLetterFrequency[getIndex]);
                         buildChiffrat.append(newLetter);
                     } else {
                         buildChiffrat.append(readLetter);
@@ -149,10 +171,11 @@ public class Tool {
         }
     }
 
+    // Die Funktion probiert alle Permutationen von 3 oder 4 Buchstaben aus und zählt deren Wörter, bei der Permutation, bei der am meisten Wörter gezählt worden sind, wird die Permutation im Schlüssel ersetzt
     public static void findWayWithMostRecognizedWords(int anzahlBuchstaben, int howManyChangedLetters, String chiffrat, String[] englishLetterFrequency, String[] sortedLetterCounter, List<LetterCounter> letterCounterList, List<WordCounter> wordCounterList, StringBuilder buildChiffrat) {
         String[] verschluesselteBuchstaben = new String[anzahlBuchstaben];
         String[] entschluesselteBuchstaben = new String[anzahlBuchstaben];
-        String[] verschluesselteBuchstaben1 = new String[anzahlBuchstaben];
+        String[] verschluesselteBuchstabenSaver = new String[anzahlBuchstaben];
         List<ArrayKeeper> arrayWithHiqhestCount = new ArrayList<>();
         for (int i = howManyChangedLetters - anzahlBuchstaben; i < howManyChangedLetters; i++) {
             verschluesselteBuchstaben[i - (howManyChangedLetters - anzahlBuchstaben)] = sortedLetterCounter[i];
@@ -166,8 +189,7 @@ public class Tool {
             System.out.println();
             for (String b : verschluesselteBuchstaben) {
                 System.out.print(b + " ");
-            }
-             */
+            }*/
             for (int j = 0; j < anzahlBuchstaben; j++) {
                 sortedLetterCounter[j + (howManyChangedLetters - anzahlBuchstaben)] = verschluesselteBuchstaben[j];
             }
@@ -182,19 +204,18 @@ public class Tool {
             /*
             for(WordCounter word : wordCounterList){
                 System.out.println(word.getWord()+" = "+word.getCount());
-            }
-             */
+            }*/
             //System.out.println("Gezählte Wörter im Text: " + Tool.getAllCounts(wordCounterList));
-            if(arrayWithHiqhestCount.isEmpty()) {
+            if (arrayWithHiqhestCount.isEmpty()) {
                 ArrayKeeper arrayKeeper = new ArrayKeeper(verschluesselteBuchstaben, Tool.getAllCounts(wordCounterList));
                 arrayWithHiqhestCount.add(arrayKeeper);
             }
-            if(arrayWithHiqhestCount.get(0).getCount() < Tool.getAllCounts(wordCounterList)) {
-                for(int k = 0; k<anzahlBuchstaben; k++) {
-                    verschluesselteBuchstaben1[k] = verschluesselteBuchstaben[k];
+            if (arrayWithHiqhestCount.get(0).getCount() < Tool.getAllCounts(wordCounterList)) {
+                for (int k = 0; k < anzahlBuchstaben; k++) {
+                    verschluesselteBuchstabenSaver[k] = verschluesselteBuchstaben[k];
                 }
-                ArrayKeeper arrayKeeper1 = new ArrayKeeper(verschluesselteBuchstaben1,Tool.getAllCounts(wordCounterList));
-                arrayWithHiqhestCount.set(0,arrayKeeper1);
+                ArrayKeeper arrayKeeperSaver = new ArrayKeeper(verschluesselteBuchstabenSaver, Tool.getAllCounts(wordCounterList));
+                arrayWithHiqhestCount.set(0, arrayKeeperSaver);
             }
             // Der Count wird wieder auf 0 gebracht, weil er sich sonst summieren würde
             for (WordCounter word : wordCounterList) {
@@ -213,7 +234,45 @@ public class Tool {
         }
         arrayWithHiqhestCount.get(0).changeArr(sortedLetterCounter, howManyChangedLetters - anzahlBuchstaben, howManyChangedLetters);
     }
+
+    // Die Funktion ist für den letzten Schritt zuständig, bei der der Benutzer noch 2 Buchstaben tauschen kann im Text
+    public static void userCanChangeLetters(Scanner eingabe, String[] sortedLetterCounter, List<LetterCounter> buchstabenZaehlerListe, String[] englishLetterFrequency, String chiffrat, StringBuilder buildChiffrat) {
+        System.out.println();
+        System.out.println("Wollen Sie 2 Buchstaben im Text tauschen?(true=ja,false=nein)");
+        Boolean finish = eingabe.nextBoolean();
+        if (finish == true) {
+            Tool.anleitungBuchstabenTauschen();
+            getKeyModified2(sortedLetterCounter, englishLetterFrequency);
+            System.out.println("Der Klartext lautet:");
+            changeLetter(26, buchstabenZaehlerListe, sortedLetterCounter, englishLetterFrequency, chiffrat, buildChiffrat);
+            String newChiffrat1 = buildChiffrat.toString();
+            System.out.println(newChiffrat1);
+            System.out.println("Das Chiffrat lautet:");
+            System.out.println(chiffrat);
+            System.out.println("Welche beiden Buchstaben sollen getauscht werden?");
+            System.out.println("Stelle des ersten Buchstabe:");
+            int firstLetter = eingabe.nextInt() - 1;
+            System.out.println("Stelle des nächsten Buchstaben:");
+            int secondLetter = eingabe.nextInt() - 1;
+            swapTwoPlaces(firstLetter, secondLetter, sortedLetterCounter);
+            buildChiffrat.setLength(0);
+            changeLetter(26, buchstabenZaehlerListe, sortedLetterCounter, englishLetterFrequency, chiffrat, buildChiffrat);
+            String newChiffrat2 = buildChiffrat.toString();
+            System.out.println();
+            System.out.println("Der neue Klartext lautet:");
+            System.out.println(newChiffrat2);
+            buildChiffrat.setLength(0);
+            Tool.userCanChangeLetters(eingabe, sortedLetterCounter, buchstabenZaehlerListe, englishLetterFrequency, chiffrat, buildChiffrat);
+        } else {
+            System.out.println("Der entgültig entschlüsselte Text lautet:");
+            changeLetter(26, buchstabenZaehlerListe, sortedLetterCounter, englishLetterFrequency, chiffrat, buildChiffrat);
+            String newChiffrat = buildChiffrat.toString();
+            System.out.println(newChiffrat);
+        }
+    }
 }
+
+
 /*
     public static void findKey(Node actuell, List<String> sortedLettersList,List<LetterCounter> letterCounterList) {
         // Abbruchbedingung

@@ -6,8 +6,9 @@ public class main {
     public static void main(String[] args) {
 
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z"," "};
+        String[] englishLetterFrequency = {"E", "T", "A", "O", "N", "I", "H", "S", "R", "L", "D", "U", "C", "M", "W", "Y", "F", "G", "P", "B", "V", "K", "J", "X", "Q", "Z", " "};
         String[] sortedLetterCounter = new String[27];
+        Scanner eingabe = new Scanner(System.in);
         /*List<String> sortedLetterList = new ArrayList<>();*/
         var chiffrat = "X KGIXM QZPPIG VXFXMUAD  U OZQM GIMZGDIN TGAP MJI KGIXMIQM QZPPIG VXFXMUAD! " +
                 "UM WXQ QA TXDMXQMUF, U DIVIG WXDMIN UM MA IDN. U QHIDM IUKJM NXRQ UD HXGUQ, TGXDFI. " +
@@ -77,9 +78,9 @@ public class main {
         List<WordCounter> woerterZaehlerListe = new ArrayList<>();
         String mostFreuquentWordsEnglish = "A ABOUT ALL ALSO AND AS AT BE BECAUSE BUT BY CAN COME COULD DAY DO EVEN FIND FIRST FOR FROM GET GIVE GO HAVE HE HER HERE HIM HIS HOW IF IN INTO IT ITS JUST KNOW LIKE LOOK MAKE MAN MANY ME MORE MY NEW NO NOT NOW OF ON ONE ONLY OR OTHER OUR OUT PEOPLE SAY SEE SHE SO SOME TAKE TELL THAN THAT THE THEIR THEM THEN THERE THESE THEY THING THINK THIS THOSE TIME TO TWO UP USE VERY WANT WAY WE WELL WHAT WHEN WHICH WHO WILL WITH WOULD YEAR YOU YOUR";
         // Jedes einzelne Wort wird in die Liste mostFrequentWordsEnglishList eingefügt
-        Tool.convertStringToList(mostFrequentWordsEnglishList,mostFreuquentWordsEnglish);
+        Tool.convertStringToList(mostFrequentWordsEnglishList, mostFreuquentWordsEnglish);
 
-        for(String word : mostFreuquentWordsEnglish.split(" ")){
+        for (String word : mostFreuquentWordsEnglish.split(" ")) {
             WordCounter wort = new WordCounter(word);
             woerterZaehlerListe.add(wort);
         }
@@ -93,7 +94,7 @@ public class main {
         }
         */
         // Das Programm zählt die Buchstaben aus dem chiffrat, mit Hilfe einer Methode und erhöht den count eines LetterCounters um den Wert 1
-        Tool.countLetters(buchstabenZaehlerListe,chiffrat);
+        Tool.countLetters(buchstabenZaehlerListe, chiffrat);
 
         // Das Programm gibt den aktuellen count nach dem Zaehlen aus
         System.out.println("");
@@ -135,19 +136,19 @@ public class main {
         }
         */
         // Das Programm iteriert durch den Text, mit Hilfe einer Methode und kann so Buchstabe für Buchstabe durch den Key ersetzt werden
-        Tool.changeLetter(3, buchstabenZaehlerListe,sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
+        Tool.changeLetter(3, buchstabenZaehlerListe, sortedLetterCounter, englishLetterFrequency, chiffrat, buildChiffrat);
         String newChiffrat = buildChiffrat.toString();
         buildChiffrat.setLength(0);
         System.out.println();
         System.out.println("Der bis jetzt entschlüsselte Text lautet:");
         System.out.println(newChiffrat);
-        Tool.findWayWithMostRecognizedWords(4,7,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.findWayWithMostRecognizedWords(4,11,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.findWayWithMostRecognizedWords(4,15,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.findWayWithMostRecognizedWords(4,19,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.findWayWithMostRecognizedWords(4,23,chiffrat,englishLetterFrequency,sortedLetterCounter,buchstabenZaehlerListe,woerterZaehlerListe,buildChiffrat);
-        Tool.getKeyModified(sortedLetterCounter,englishLetterFrequency);
-        Tool.changeLetter(26,buchstabenZaehlerListe,sortedLetterCounter,englishLetterFrequency,chiffrat,buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4, 7, chiffrat, englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, woerterZaehlerListe, buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4, 11, chiffrat, englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, woerterZaehlerListe, buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4, 15, chiffrat, englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, woerterZaehlerListe, buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4, 19, chiffrat, englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, woerterZaehlerListe, buildChiffrat);
+        Tool.findWayWithMostRecognizedWords(4, 23, chiffrat, englishLetterFrequency, sortedLetterCounter, buchstabenZaehlerListe, woerterZaehlerListe, buildChiffrat);
+        Tool.getKeyModified(sortedLetterCounter, englishLetterFrequency);
+        Tool.changeLetter(26, buchstabenZaehlerListe, sortedLetterCounter, englishLetterFrequency, chiffrat, buildChiffrat);
         String klarText = buildChiffrat.toString();
         buildChiffrat.setLength(0);
         System.out.println("Der nun entschlüsselte Text lautet: ");
@@ -155,6 +156,8 @@ public class main {
         System.out.println();
         System.out.println("Das eigentliche chiffrat lautete: ");
         System.out.println(chiffrat);
+        Tool.userCanChangeLetters(eingabe,sortedLetterCounter,buchstabenZaehlerListe,englishLetterFrequency,chiffrat,buildChiffrat);
+    }
 /*
         String[] mostFrequentWordsEnglish = {""};
         Node root = new Node("i", "e");
@@ -163,7 +166,6 @@ public class main {
         Tool.convertLetterCounterListToStringList(buchstabenZaehlerListe,sortedLetterList);
         Tool.findKey(aktuell, sortedLetterList, buchstabenZaehlerListe);
         */
-    }
 }
 
 // Eine Klasse LetterCounter wird erstellt, die die Variablen letter und count besitzt
