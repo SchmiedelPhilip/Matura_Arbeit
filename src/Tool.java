@@ -211,9 +211,7 @@ public class Tool {
                 arrayWithHiqhestCount.add(arrayKeeper);
             }
             if (arrayWithHiqhestCount.get(0).getCount() < Tool.getAllCounts(wordCounterList)) {
-                for (int k = 0; k < anzahlBuchstaben; k++) {
-                    verschluesselteBuchstabenSaver[k] = verschluesselteBuchstaben[k];
-                }
+                System.arraycopy(verschluesselteBuchstaben, 0, verschluesselteBuchstabenSaver, 0, anzahlBuchstaben);
                 ArrayKeeper arrayKeeperSaver = new ArrayKeeper(verschluesselteBuchstabenSaver, Tool.getAllCounts(wordCounterList));
                 arrayWithHiqhestCount.set(0, arrayKeeperSaver);
             }
@@ -249,6 +247,7 @@ public class Tool {
             System.out.println("Das Chiffrat lautet:");
             System.out.println(chiffrat);
             Tool.anleitungBuchstabenTauschen();
+            System.out.println();
             System.out.println("Welche beiden Buchstaben sollen getauscht werden?");
             System.out.println("Stelle des ersten Buchstabe:");
             int firstLetter = eingabe.nextInt() - 1;
